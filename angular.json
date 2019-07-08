@@ -2,13 +2,320 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "libs": {
+      "root": "libs",
+      "sourceRoot": "libs",
+      "projectType": "library",
+      "prefix": "vessel",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "testing/test.libs.ts",
+            "tsConfig": "testing/tsconfig.libs.spec.json",
+            "karmaConfig": "testing/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "testing/tsconfig.libs.json",
+              "testing/tsconfig.libs.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "xplat": {
+      "root": "xplat",
+      "sourceRoot": "xplat",
+      "projectType": "library",
+      "prefix": "vessel",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "testing/test.xplat.ts",
+            "tsConfig": "testing/tsconfig.xplat.spec.json",
+            "karmaConfig": "testing/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "testing/tsconfig.xplat.json",
+              "testing/tsconfig.xplat.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "web-vessel": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-vessel",
+      "sourceRoot": "apps/web-vessel/src",
+      "prefix": "vessel",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-vessel",
+            "index": "apps/web-vessel/src/index.html",
+            "main": "apps/web-vessel/src/main.ts",
+            "polyfills": "apps/web-vessel/src/polyfills.ts",
+            "tsConfig": "apps/web-vessel/tsconfig.app.json",
+            "assets": [
+              "apps/web-vessel/src/favicon.ico",
+              "apps/web-vessel/src/assets"
+            ],
+            "styles": [
+              "xplat/web/scss/_index.scss",
+              "apps/web-vessel/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-vessel/src/environments/environment.ts",
+                  "with": "apps/web-vessel/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-vessel:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-vessel:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-vessel:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/web-vessel/tsconfig.app.json",
+              "apps/web-vessel/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-vessel/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-vessel/jest.config.js",
+            "tsConfig": "apps/web-vessel/tsconfig.spec.json",
+            "setupFile": "apps/web-vessel/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "web-vessel-e2e": {
+      "root": "apps/web-vessel-e2e",
+      "sourceRoot": "apps/web-vessel-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-vessel-e2e/cypress.json",
+            "tsConfig": "apps/web-vessel-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-vessel:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-vessel:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/web-vessel-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-vessel-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "nativescript-vessel": {
+      "root": "apps/nativescript-vessel/",
+      "sourceRoot": "apps/nativescript-vessel/app",
+      "projectType": "application",
+      "prefix": "vessel",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "serve": {
+          "builder": "@nrwl/builders:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "yarn start.nativescript.vessel.preview"
+              }
+            ]
+          },
+          "configurations": {
+            "ios": {
+              "commands": [
+                {
+                  "command": "yarn start.nativescript.vessel.ios"
+                }
+              ]
+            },
+            "android": {
+              "commands": [
+                {
+                  "command": "yarn start.nativescript.vessel.android"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "electron-vessel": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-vessel",
+      "sourceRoot": "apps/web-vessel/src",
+      "prefix": "vessel",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/electron-vessel",
+            "index": "apps/web-vessel/src/index.html",
+            "main": "apps/web-vessel/src/main.electron.ts",
+            "polyfills": "apps/web-vessel/src/polyfills.ts",
+            "tsConfig": "apps/web-vessel/tsconfig.app.json",
+            "assets": [
+              "apps/web-vessel/src/favicon.ico",
+              "apps/web-vessel/src/assets",
+              {
+                "glob": "**/*",
+                "input": "apps/electron-vessel/src/",
+                "ignore": [
+                  "**/*.ts"
+                ],
+                "output": ""
+              }
+            ],
+            "styles": [
+              "xplat/web/scss/_index.scss",
+              "apps/web-vessel/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-vessel/src/environments/environment.ts",
+                  "with": "apps/web-vessel/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "electron-vessel:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "electron-vessel:build:production"
+            }
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
       "versionMismatch": false
     },
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nstudio/schematics"
   },
-  "schematics": {}
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  }
 }

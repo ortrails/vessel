@@ -7,5 +7,27 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "libs": {
+      "tags": []
+    },
+    "xplat": {
+      "tags": []
+    },
+    "web-vessel-e2e": {
+      "tags": []
+    },
+    "web-vessel": {
+      "tags": []
+    },
+    "nativescript-vessel": {
+      "tags": []
+    },
+    "electron-vessel": {
+      "tags": []
+    },
+    "nest-vessel": {
+      "tags": []
+    }
+  }
 }

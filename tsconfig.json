@@ -10,12 +10,48 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@vessel/*": [
+        "libs/*"
+      ],
+      "@vessel/electron": [
+        "xplat/electron/index.ts"
+      ],
+      "@vessel/electron/*": [
+        "xplat/electron/*"
+      ],
+      "@vessel/nativescript": [
+        "xplat/nativescript/index.ts"
+      ],
+      "@vessel/nativescript/*": [
+        "xplat/nativescript/*"
+      ],
+      "@vessel/nest": [
+        "xplat/nest/index.ts"
+      ],
+      "@vessel/nest/*": [
+        "xplat/nest/*"
+      ],
+      "@vessel/web": [
+        "xplat/web/index.ts"
+      ],
+      "@vessel/web/*": [
+        "xplat/web/*"
+      ]
+    }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
