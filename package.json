@@ -92,7 +92,7 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "~6.4.0",
     "tns-core-modules": "~5.2.0",
-    "typeorm": "^0.2.9",
+    "typeorm": "^0.3.15",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
@@ -103,7 +103,7 @@
     "@nrwl/cypress": "8.2.0",
     "@nrwl/jest": "8.2.0",
     "@nrwl/workspace": "8.2.0",
-    "@nstudio/schematics": "^7.4.8",
+    "@nstudio/schematics": "^15.0.3",
     "@types/jasmine": "^3.3.13",
     "@types/jest": "^20.0.8",
     "@types/node": "^9.3.0",
